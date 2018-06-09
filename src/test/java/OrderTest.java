@@ -25,7 +25,7 @@ public class OrderTest {
     @Test
     public void shouldBookACourt() {
         Order order = new Order();
-        order.initByOrderStr("U002 2017-08-01 19~22 A");
+        order.initByOrderStr("U002 2017-08-01 19:00~22:00 A");
         Manager manager = new Manager();
         manager.book(order);
         Interval expectInterval = new Interval(19, 22, "2017-08-01","U002");
@@ -35,9 +35,9 @@ public class OrderTest {
     @Test
     public void shouldCancel() {
         Order order = new Order();
-        order.initByOrderStr("U002 2017-08-01 19~22 A");
+        order.initByOrderStr("U002 2017-08-01 19:00~22:00 A");
         Order cancelOrder = new Order();
-        cancelOrder.initByOrderStr("U002 2017-08-01 19~22 A C");
+        cancelOrder.initByOrderStr("U002 2017-08-01 19:00~22:00 A C");
         Manager manager = new Manager();
         manager.book(order);
         Interval expectInterval = new Interval(19, 22, "2017-08-01","U002");
