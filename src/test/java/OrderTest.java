@@ -15,4 +15,10 @@ public class OrderTest {
 
         assertEquals(DateUtil.dateIsEqual(dtBeg, dtBeg2), true);
     }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldInitOrder() {
+        Order order = new Order();
+        order.initByOrderStr("fsldkfjslkd");
+    }
 }
