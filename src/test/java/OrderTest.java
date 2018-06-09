@@ -21,4 +21,14 @@ public class OrderTest {
         Order order = new Order();
         order.initByOrderStr("fsldkfjslkd");
     }
+
+    @Test
+    public void shouldBookACourt() {
+        Order order = new Order();
+        order.initByOrderStr("U002 2017-08-01 19~22 A");
+        Manager manager = new Manager();
+        manager.book(order);
+        Interval expectInterval = new Interval(19,22,"2017-08-01");
+        assertEquals(expectInterval,manager.getCourtMap().get("A").getIntervalsMap().get("2017-08-01").get(0));
 }
+    }

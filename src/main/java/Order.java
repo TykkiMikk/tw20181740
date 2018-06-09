@@ -3,8 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order {
-    private int start, end;
-    private String date, court;
+    private Interval interval;
+    private String courtName;
     private Boolean cancel=false;
     private String userId;
     private double price=0;
@@ -14,13 +14,14 @@ public class Order {
         String[] elements=orderStr.split(" ");
         if (elements.length == 4 || elements.length == 5) {
             userId = elements[0];
-            date = elements[1];
+            String day = elements[1];
             String[] time = elements[2].split("~");
-            start = Integer.parseInt(time[0]);
-            end = Integer.parseInt(time[1]);
+            int start = Integer.parseInt(time[0]);
+            int end = Integer.parseInt(time[1]);
+            this.interval=new Interval(start,end,day);
             if (elements.length == 5 && elements[4] == "C")
                 cancel = true;
-            court = elements[3];
+            courtName = elements[3];
             //if() format is not valid
         } else {
             throw new RuntimeException();
@@ -28,42 +29,29 @@ public class Order {
 
     }
 
+
+
     public Date stringToDate(String string) throws ParseException {
         SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         return simFormat.parse("2008.01.23 22:45:56");
     }
 
-
-    public int getStart() {
-        return start;
+    public Interval getInterval() {
+        return interval;
     }
 
-    public void setStart(int start) {
-        this.start = start;
+    public void setInterval(Interval interval) {
+        this.interval = interval;
     }
 
-    public int getEnd() {
-        return end;
+
+
+    public String getCourtName() {
+        return courtName;
     }
 
-    public void setEnd(int end) {
-        this.end = end;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getCourt() {
-        return court;
-    }
-
-    public void setCourt(String court) {
-        this.court = court;
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
     }
 
     public Boolean getCancel() {
@@ -88,5 +76,9 @@ public class Order {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void book() {
+
     }
 }
