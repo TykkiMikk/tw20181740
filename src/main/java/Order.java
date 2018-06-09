@@ -18,7 +18,7 @@ public class Order {
         if(!timeArray1[1].equals("00")||!timeArray2[1].equals("00"))
             return false;
         this.start = Integer.parseInt(timeArray1[0],10);
-        this.end = Integer.parseInt(timeArray1[0],10);
+        this.end = Integer.parseInt(timeArray2[0],10);
         if(start>=end||!(start>=9&&end<=22))
             return false;
         return true;
