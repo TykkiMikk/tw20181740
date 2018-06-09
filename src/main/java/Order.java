@@ -13,12 +13,13 @@ public class Order {
     {
         String[] elements=orderStr.split(" ");
         if (elements.length == 4 || elements.length == 5) {
-            userId = elements[0];
+            String userId = elements[0];
+            this.userId=userId;
             String day = elements[1];
             String[] time = elements[2].split("~");
             int start = Integer.parseInt(time[0]);
             int end = Integer.parseInt(time[1]);
-            this.interval=new Interval(start,end,day);
+            this.interval=new Interval(start,end,day,userId);
             if (elements.length == 5 && elements[4] == "C")
                 cancel = true;
             courtName = elements[3];

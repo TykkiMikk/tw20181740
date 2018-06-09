@@ -21,13 +21,15 @@ public class Court {
         List<Interval> orderedIntervalsForDay=this.intervalsMap.get(day);
         if(orderedIntervalsForDay==null)
         {
-            this.intervalsMap.put(day, Collections.singletonList(cur));
+            List<Interval> tempList = new ArrayList<>();
+            tempList.add(cur);
+            this.intervalsMap.put(day, tempList);
             bookSuccess=true;
         }
         else{
             if(orderedIntervalsForDay.size()==0)
             {
-                orderedIntervalsForDay.add(cur);
+                this.intervalsMap.get(day).add(cur);
                 bookSuccess=true;
             }
             else{
@@ -38,7 +40,7 @@ public class Court {
                     if(end<orderedIntervalsForDay.get(i).getStart()&&
                             (i==0||orderedIntervalsForDay.get(i-1).getEnd()<start))
                     {
-                        orderedIntervalsForDay.add(i,cur);
+                        this.intervalsMap.get(day).add(i,cur);
                         insertInList=true;
                         bookSuccess=true;
                         break;
@@ -47,7 +49,7 @@ public class Court {
                 if(!insertInList)
                 {
                     if(start>orderedIntervalsForDay.get(length-1).getEnd()) {
-                        orderedIntervalsForDay.add(cur);
+                        this.intervalsMap.get(day).add(cur);
                         bookSuccess = true;
                     }
                 }
@@ -71,5 +73,28 @@ public class Court {
 
     public void setIntervalsMap(Map<String, List<Interval>> intervalsMap) {
         this.intervalsMap = intervalsMap;
+    }
+
+    public Boolean cancelOrder(Order order) {
+        Boolean cancelSuccess=false;
+        Interval cur=order.getInterval();
+        String day = cur.getDay(),userId=order.getUserId();
+        int start = cur.getStart();
+        int end = cur.getEnd();
+        List<Interval> canceledIntervalsForDay=this.intervalsMap.get(day);
+        if(canceledIntervalsForDay==null||canceledIntervalsForDay.size()==0)
+            return cancelSuccess;
+        int length=canceledIntervalsForDay.size();
+        for(int i=0;i<length;i++)
+        {
+            Interval cancelInterval=canceledIntervalsForDay.get(i);
+            if(start==cancelInterval.getStart()&& end==cancelInterval.getEnd() && userId.equals(cancelInterval.getUserId()))
+            {
+                cancelSuccess=true;
+                this.intervalsMap.get(day).remove(i);
+                break;
+            }
+        }
+        return cancelSuccess;
     }
 }

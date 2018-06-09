@@ -28,7 +28,22 @@ public class OrderTest {
         order.initByOrderStr("U002 2017-08-01 19~22 A");
         Manager manager = new Manager();
         manager.book(order);
-        Interval expectInterval = new Interval(19,22,"2017-08-01");
-        assertEquals(expectInterval,manager.getCourtMap().get("A").getIntervalsMap().get("2017-08-01").get(0));
-}
+        Interval expectInterval = new Interval(19, 22, "2017-08-01","U002");
+        assertEquals(expectInterval, manager.getCourtMap().get("A").getIntervalsMap().get("2017-08-01").get(0));
     }
+
+    @Test
+    public void shouldCancel() {
+        Order order = new Order();
+        order.initByOrderStr("U002 2017-08-01 19~22 A");
+        Order cancelOrder = new Order();
+        cancelOrder.initByOrderStr("U002 2017-08-01 19~22 A C");
+        Manager manager = new Manager();
+        manager.book(order);
+        Interval expectInterval = new Interval(19, 22, "2017-08-01","U002");
+        assertEquals(expectInterval, manager.getCourtMap().get("A").getIntervalsMap().get("2017-08-01").get(0));
+        manager.cancel(cancelOrder);
+        assertEquals(0, manager.getCourtMap().get("A").getIntervalsMap().get("2017-08-01").size());
+    }
+}
+

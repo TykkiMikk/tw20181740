@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,13 +16,17 @@ public class Manager {
 
     }
 
-    public void book(Order order) {
-        if (!order.getCancel()) {
-            String courtName = order.getCourtName();
-            courtMap.get(courtName).bookNewOrder(order);//return booksuccess
-//        } else {
-//
-        }
+    public Boolean cancel(Order order)
+    {
+        Boolean operationSuccess =false;
+        String courtName = order.getCourtName();
+        return(courtMap.get(courtName).cancelOrder(order));
+    }
+
+    public Boolean book(Order order) {
+        Boolean operationSuccess =false;
+        String courtName = order.getCourtName();
+        return(courtMap.get(courtName).bookNewOrder(order));//return booksuccess
     }
 
     public Map<String, Court> getCourtMap() {

@@ -2,12 +2,13 @@ import java.util.Objects;
 
 public class Interval{
     private int start,end;
-    private String day;
+    private String day,userId;
 
-    public Interval(int start, int end,String day) {
+    public Interval(int start, int end,String day,String userId) {
         this.start = start;
         this.end = end;
         this.day = day;
+        this.userId=userId;
     }
 
     public int getStart() {
@@ -36,5 +37,9 @@ public class Interval{
     public int hashCode() {
 
         return Objects.hash(start, end, day);
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }
